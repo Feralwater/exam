@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import './App.css';
+import s from './App.module.css';
 import Button from "./button/Button";
 
 function App() {
@@ -13,14 +13,14 @@ function App() {
         setCount(0)
     }
     return (
-        <div className="App">
-            <div>
-                <div>
-                    <div>{count}</div>
+        <div className={s.App}>
+            <div className={s.counter_container}>
+                <div className={s.display}>
+                    <div className={count === MAX ? s.counter + " " + s.red : s.counter}>{count}</div>
                 </div>
-                <div>
-                    <Button onClick={incrementCount} disabled={count===MAX}>inc</Button>
-                    <Button onClick={resetCount} disabled={count===MIN}>reset</Button>
+                <div className={s.buttons_container}>
+                    <Button onClick={incrementCount} disabled={count === MAX}>inc</Button>
+                    <Button onClick={resetCount} disabled={count === MIN}>reset</Button>
                 </div>
             </div>
         </div>

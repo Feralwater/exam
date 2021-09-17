@@ -1,4 +1,5 @@
 import React from 'react';
+import s from "./Button.module.css"
 
 type PropsButtonType = {
     onClick: () => void
@@ -7,6 +8,7 @@ type PropsButtonType = {
 const Button: React.FC<PropsButtonType> = ({children, onClick, disabled}) => {
     return (
         <button
+            className={s.btn}
             onClick={onClick}
             disabled={disabled}
         >

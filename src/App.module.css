@@ -1,0 +1,39 @@
+.App {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.buttons_container {
+    display: flex;
+    border: 2px solid #63dafc;
+    border-radius: 10px;
+    margin: 20px 0 0 0;
+}
+
+.counter_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid #63dafc;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.counter {
+    font-size: 130px;
+    font-weight: bold;
+}
+
+.red {
+    color: #f11545;
+}
+
+.display {
+    width: 100%;
+    background-color: #63dafc;
+    border: 2px solid #63dafc;
+    border-radius: 10px;
+}
