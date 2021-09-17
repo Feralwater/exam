@@ -1,0 +1,2 @@
+(this.webpackJsonpexam=this.webpackJsonpexam||[]).push([[0],{11:function(e,t,n){"use strict";n.r(t);var c=n(0),s=n.n(c),r=n(3),a=n.n(r),i=(n(8),n(9),n(1));var o=function(){return Object(i.jsx)("div",{className:"App"})};a.a.render(Object(i.jsx)(s.a.StrictMode,{children:Object(i.jsx)(o,{})}),document.getElementById("root"))},8:function(e,t,n){},9:function(e,t,n){}},[[11,1,2]]]);
+//# sourceMappingURL=main.6a30aea8.chunk.js.map
