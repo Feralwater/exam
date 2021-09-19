@@ -11,6 +11,8 @@
     border: 2px solid #63dafc;
     border-radius: 10px;
     margin: 20px 0 0 0;
+    width: 100%;
+    justify-content: center;
 }
 
 .counter_container {
@@ -20,6 +22,7 @@
     border: 2px solid #63dafc;
     border-radius: 10px;
     padding: 20px;
+    margin: 0 30px;
 }
 
 .counter {
@@ -33,7 +36,7 @@
 
 .display {
     width: 100%;
-    background-color: #63dafc;
+    /*background-color: #63dafc;*/
     border: 2px solid #63dafc;
     border-radius: 10px;
 }
