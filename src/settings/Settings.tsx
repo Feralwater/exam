@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import s from "../App.module.css";
 import SetValue from "../setValue/SetValue";
 import Button from "../button/Button";
@@ -17,6 +17,21 @@ const Settings: React.VFC<SettingsPropsType> = (
     const [minimum, setMinimum] = useState<number>(0)
     const [maximum, setMaximum] = useState<number>(1)
     const [disableSet, setDisableSet] = useState<boolean>(false)
+
+    useEffect(() => {
+        const savedMaximum = localStorage.getItem("maxCounterValue")
+        const savedMinimum = localStorage.getItem("minCounterValue")
+        if (savedMaximum && savedMinimum) {
+            const newMaximum = JSON.parse(savedMaximum)
+            const newMinimum = JSON.parse(savedMinimum)
+            setMaximum(newMaximum)
+            setMinimum(newMinimum)
+        }
+    }, [])
+    useEffect(() => {
+        localStorage.setItem("maxCounterValue", JSON.stringify(maximum))
+        localStorage.setItem("minCounterValue", JSON.stringify(minimum))
+    }, [minimum, maximum])
 
     const setMaxValue = (value: number) => {
         setMaximum(value);
