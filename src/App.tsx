@@ -4,15 +4,17 @@ import Button from "./button/Button";
 import Settings from "./settings/Settings";
 
 function App() {
-    const [count, setCount] = useState<number>(0)
+    const savedMinimum = localStorage.getItem("minCounterValue")
+    const [count, setCount] = useState<number>(savedMinimum ? +JSON.parse(savedMinimum) : 0)
     const [MAXIMUM, setMAXIMUM] = useState<number>(1)
     const [MINIMUM, setMINIMUM] = useState<number>(0)
     const [settings, setSettings] = useState<boolean>(false)
+
     const incrementCount = () => {
         setCount(prev => prev + 1)
     }
     const resetCount = () => {
-        setCount(0)
+        savedMinimum && setCount(+savedMinimum)
     }
 
     return (
