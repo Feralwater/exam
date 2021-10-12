@@ -1,20 +1,26 @@
-import React, {useState} from 'react';
+import React from 'react';
 import s from './App.module.css';
 import Button from "./button/Button";
 import Settings from "./settings/Settings";
+import {useDispatch, useSelector} from "react-redux";
+import {AppStateType} from "./redux/store";
+import {incrementCountAC, setCountAC, setSettingsAC} from "./redux/counter-reducer";
 
 function App() {
     const savedMinimum = localStorage.getItem("minCounterValue")
-    const [count, setCount] = useState<number>(savedMinimum ? +JSON.parse(savedMinimum) : 0)
-    const [MAXIMUM, setMAXIMUM] = useState<number>(1)
-    const [MINIMUM, setMINIMUM] = useState<number>(0)
-    const [settings, setSettings] = useState<boolean>(false)
+    // const [count, setCount] = useState<number>(savedMinimum ? +JSON.parse(savedMinimum) : 0)
+
+    const count = useSelector<AppStateType, number>(state => state.counter.count);
+    const MAXIMUM = useSelector<AppStateType, number>(state => state.counter.MAXIMUM);
+    const MINIMUM = useSelector<AppStateType, number>(state => state.counter.MINIMUM);
+    const settings = useSelector<AppStateType, boolean>(state => state.counter.settings);
+    const dispatch = useDispatch();
 
     const incrementCount = () => {
-        setCount(prev => prev + 1)
+        dispatch(incrementCountAC())
     }
     const resetCount = () => {
-        savedMinimum && setCount(+savedMinimum)
+        savedMinimum && dispatch(setCountAC(+savedMinimum))
     }
 
     return (
@@ -31,15 +37,11 @@ function App() {
                     <Button onClick={resetCount}
                             disabled={count === MINIMUM}
                     >reset</Button>
-                    <Button onClick={() => setSettings(true)} disabled={false}>set</Button>
+                    <Button onClick={() => dispatch(setSettingsAC(true))} disabled={false}>set</Button>
                 </div>
             </div>}
             {settings &&
-            <Settings setCount={setCount}
-                      setMAXIMUM={setMAXIMUM}
-                      setMINIMUM={setMINIMUM}
-                      setSettings={setSettings}
-            />
+            <Settings/>
             }
         </div>
     );

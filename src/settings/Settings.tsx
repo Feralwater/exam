@@ -2,21 +2,22 @@ import React, {useEffect, useState} from 'react';
 import s from "../App.module.css";
 import SetValue from "../setValue/SetValue";
 import Button from "../button/Button";
+import {useDispatch, useSelector} from "react-redux";
+import {
+    disableSetAC,
+    setCountAC,
+    setMaximumSettingsAC,
+    setMinimumSettingsAC,
+    setSettingsAC
+} from "../redux/counter-reducer";
+import {AppStateType} from "../redux/store";
 
+const Settings: React.VFC = () => {
 
-type SettingsPropsType = {
-    setCount: (count: number) => void
-    setMAXIMUM: (maximum: number) => void
-    setMINIMUM: (minimum: number) => void
-    setSettings: (setting: boolean) => void
-}
-
-const Settings: React.VFC<SettingsPropsType> = (
-    {setCount, setMAXIMUM, setMINIMUM, setSettings}
-) => {
-    const [minimum, setMinimum] = useState<number>(0)
-    const [maximum, setMaximum] = useState<number>(1)
-    const [disableSet, setDisableSet] = useState<boolean>(false)
+    const minimum = useSelector<AppStateType, number>(state => state.counter.minimum);
+    const maximum = useSelector<AppStateType, number>(state => state.counter.maximum);
+    const disableSet = useSelector<AppStateType, boolean>(state => state.counter.disableSet);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const savedMaximum = localStorage.getItem("maxCounterValue")
@@ -24,8 +25,8 @@ const Settings: React.VFC<SettingsPropsType> = (
         if (savedMaximum && savedMinimum) {
             const newMaximum = JSON.parse(savedMaximum)
             const newMinimum = JSON.parse(savedMinimum)
-            setMaximum(newMaximum)
-            setMinimum(newMinimum)
+            dispatch(setMaximumSettingsAC(newMaximum))
+            dispatch(setMinimumSettingsAC(newMinimum))
         }
     }, [])
     useEffect(() => {
@@ -34,20 +35,20 @@ const Settings: React.VFC<SettingsPropsType> = (
     }, [minimum, maximum])
 
     const setMaxValue = (value: number) => {
-        setMaximum(value);
-        setDisableSet(false);
+        dispatch(setMaximumSettingsAC(value))
+        dispatch(disableSetAC(false))
     }
     const setStartValue = (value: number) => {
-        setMinimum(value);
-        setDisableSet(false);
+        dispatch(setMinimumSettingsAC(value))
+        dispatch(disableSetAC(false))
     }
 
     const setValue = () => {
-        setMAXIMUM(maximum);
-        setMINIMUM(minimum);
-        setCount(minimum);
-        setDisableSet(true);
-        setSettings(false);
+        dispatch(setMaximumSettingsAC(maximum))
+        dispatch(setMinimumSettingsAC(minimum))
+        dispatch(setCountAC(minimum))
+        dispatch(disableSetAC(true))
+        dispatch(setSettingsAC(false));
     }
     return (
         <div className={s.counter_container}>
