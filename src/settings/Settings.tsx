@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import s from "../App.module.css";
 import SetValue from "../setValue/SetValue";
 import Button from "../button/Button";
@@ -8,31 +8,16 @@ import {
     setCountAC,
     setMaximumSettingsAC,
     setMinimumSettingsAC,
-    setSettingsAC
+    setSettingsAC,
 } from "../redux/counter-reducer";
 import {AppStateType} from "../redux/store";
 
 const Settings: React.VFC = () => {
 
-    const minimum = useSelector<AppStateType, number>(state => state.counter.minimum);
-    const maximum = useSelector<AppStateType, number>(state => state.counter.maximum);
     const disableSet = useSelector<AppStateType, boolean>(state => state.counter.disableSet);
+    const MAXIMUM = useSelector<AppStateType, number>(state => state.counter.MAXIMUM);
+    const MINIMUM = useSelector<AppStateType, number>(state => state.counter.MINIMUM);
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        const savedMaximum = localStorage.getItem("maxCounterValue")
-        const savedMinimum = localStorage.getItem("minCounterValue")
-        if (savedMaximum && savedMinimum) {
-            const newMaximum = JSON.parse(savedMaximum)
-            const newMinimum = JSON.parse(savedMinimum)
-            dispatch(setMaximumSettingsAC(newMaximum))
-            dispatch(setMinimumSettingsAC(newMinimum))
-        }
-    }, [])
-    useEffect(() => {
-        localStorage.setItem("maxCounterValue", JSON.stringify(maximum))
-        localStorage.setItem("minCounterValue", JSON.stringify(minimum))
-    }, [minimum, maximum])
 
     const setMaxValue = (value: number) => {
         dispatch(setMaximumSettingsAC(value))
@@ -44,9 +29,9 @@ const Settings: React.VFC = () => {
     }
 
     const setValue = () => {
-        dispatch(setMaximumSettingsAC(maximum))
-        dispatch(setMinimumSettingsAC(minimum))
-        dispatch(setCountAC(minimum))
+        dispatch(setMaximumSettingsAC(MAXIMUM))
+        dispatch(setMinimumSettingsAC(MINIMUM))
+        dispatch(setCountAC(MINIMUM))
         dispatch(disableSetAC(true))
         dispatch(setSettingsAC(false));
     }
@@ -54,17 +39,17 @@ const Settings: React.VFC = () => {
         <div className={s.counter_container}>
             <div className={s.display}>
                 <SetValue onChange={setMaxValue}
-                          value={maximum}
-                          className={minimum >= maximum ? "redInput" : "input"}
+                          value={MAXIMUM}
+                          className={MINIMUM >= MAXIMUM ? "redInput" : "input"}
                 >max value</SetValue>
                 <SetValue onChange={setStartValue}
-                          value={minimum}
-                          className={minimum >= maximum ? "redInput" : "input"}
+                          value={MINIMUM}
+                          className={MINIMUM >= MAXIMUM ? "redInput" : "input"}
                 >start value</SetValue>
             </div>
             <div className={s.buttons_container}>
                 <Button onClick={setValue}
-                        disabled={disableSet || minimum >= maximum}
+                        disabled={disableSet || MINIMUM >= MAXIMUM}
                 >set</Button>
             </div>
         </div>

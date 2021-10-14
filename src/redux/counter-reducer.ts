@@ -3,16 +3,13 @@ const initialState = {
     MAXIMUM: 1,
     MINIMUM: 0,
     settings: false,
-    minimum: 0,
-    maximum: 1,
     disableSet: false
 }
 
-type InitialStateType = typeof initialState
+export type InitialStateType = typeof initialState
 
 type ActionType =
     IncValuesActionType
-    | ValueFromLocalStorageType
     | SettingsType
     | MinimumSettingsType
     | MaximumSettingsType
@@ -26,11 +23,6 @@ export const counterReducer = (state: InitialStateType = initialState, action: A
                 ...state,
                 count: state.count + 1
             }
-        case "SET_MINIMUM_FROM_LOCAL_STORAGE":
-            return {
-                ...state,
-                MINIMUM: action.minimum
-            }
         case "SET_SETTINGS":
             return {
                 ...state,
@@ -39,12 +31,12 @@ export const counterReducer = (state: InitialStateType = initialState, action: A
         case "MINIMUM_SETTINGS":
             return {
                 ...state,
-                minimum: action.minimum
+                MINIMUM: action.MINIMUM
             }
         case "MAXIMUM_SETTINGS":
             return {
                 ...state,
-                maximum: action.maximum
+                MAXIMUM: action.MAXIMUM
             }
         case "DISABLE_SETTINGS":
             return {
@@ -63,7 +55,6 @@ export const counterReducer = (state: InitialStateType = initialState, action: A
 
 export type IncValuesActionType = ReturnType<typeof incrementCountAC>
 export type SettingsType = ReturnType<typeof setSettingsAC>
-export type ValueFromLocalStorageType = ReturnType<typeof setValueFromLocalStorageAC>
 export type MinimumSettingsType = ReturnType<typeof setMinimumSettingsAC>
 export type MaximumSettingsType = ReturnType<typeof setMaximumSettingsAC>
 export type DisableType = ReturnType<typeof disableSetAC>
@@ -72,9 +63,6 @@ export type SetCountType = ReturnType<typeof setCountAC>
 export const incrementCountAC = () => ({type: "INCREMENT_COUNT"} as const);
 export const setCountAC = (count: number) => ({type: "SET_COUNT", count} as const);
 export const setSettingsAC = (settings: boolean) => ({type: "SET_SETTINGS", settings} as const);
-export const setValueFromLocalStorageAC = (minimum: number) => ({
-    type: "SET_MINIMUM_FROM_LOCAL_STORAGE", minimum
-} as const);
-export const setMinimumSettingsAC = (minimum: number) => ({type: "MINIMUM_SETTINGS", minimum} as const);
-export const setMaximumSettingsAC = (maximum: number) => ({type: "MAXIMUM_SETTINGS", maximum} as const);
+export const setMinimumSettingsAC = (MINIMUM: number) => ({type: "MINIMUM_SETTINGS", MINIMUM} as const);
+export const setMaximumSettingsAC = (MAXIMUM: number) => ({type: "MAXIMUM_SETTINGS", MAXIMUM} as const);
 export const disableSetAC = (bool: boolean) => ({type: "DISABLE_SETTINGS", disableSet: bool} as const);

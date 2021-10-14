@@ -7,8 +7,6 @@ import {AppStateType} from "./redux/store";
 import {incrementCountAC, setCountAC, setSettingsAC} from "./redux/counter-reducer";
 
 function App() {
-    const savedMinimum = localStorage.getItem("minCounterValue")
-    // const [count, setCount] = useState<number>(savedMinimum ? +JSON.parse(savedMinimum) : 0)
 
     const count = useSelector<AppStateType, number>(state => state.counter.count);
     const MAXIMUM = useSelector<AppStateType, number>(state => state.counter.MAXIMUM);
@@ -20,7 +18,7 @@ function App() {
         dispatch(incrementCountAC())
     }
     const resetCount = () => {
-        savedMinimum && dispatch(setCountAC(+savedMinimum))
+   dispatch(setCountAC(MINIMUM))
     }
 
     return (
@@ -28,7 +26,8 @@ function App() {
             {!settings && <div className={s.counter_container}>
                 <div className={s.display}>
                     <div className={count === MAXIMUM && count > 0 ? s.counter + " " + s.red : s.counter}
-                    >{count}</div>
+                    >{count}
+                    </div>
                 </div>
                 <div className={s.buttons_container}>
                     <Button onClick={incrementCount}
